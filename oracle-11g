@@ -1,2 +1,2 @@
-FROM docker.io/jaspeen/oracle-11g
+FROM wnameless/oracle-xe-11g
 MAINTAINER 695243946@qq.com
