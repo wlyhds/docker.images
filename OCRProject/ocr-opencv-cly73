@@ -1,0 +1,2 @@
+FROM cly753/ocr_opencv
+MAINTAINER 695243946@qq.com
