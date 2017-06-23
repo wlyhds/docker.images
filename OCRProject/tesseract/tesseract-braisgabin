@@ -1,2 +1,3 @@
+#from docker.io/braisgabin/tesseract
 FROM braisgabin/tesseract
 MAINTAINER 695243946@qq.com
