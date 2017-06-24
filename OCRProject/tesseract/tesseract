@@ -19,7 +19,7 @@ RUN apt-get update \
     libtiff5-dev \
     libtool \
     zlib1g-dev \
-  && git clone --branch 3.04.01 --depth 1 https://github.com/tesseract-ocr/tesseract.git /tmp/tesseract \
+  && git clone --branch 3.05.01 --depth 1 https://github.com/tesseract-ocr/tesseract.git /tmp/tesseract \
   && cd /tmp/tesseract \
   && ./autogen.sh \
   && ./configure \
@@ -31,6 +31,8 @@ RUN apt-get update \
   && cd / \
   && curl -o /usr/local/share/tessdata/eng.traineddata \
     https://raw.githubusercontent.com/tesseract-ocr/tessdata/master/eng.traineddata \
+  && curl -o /usr/local/share/tessdata/chi_sim.traineddata \
+    https://raw.githubusercontent.com/tesseract-ocr/tessdata/master/chi_sim.traineddata \
   && apt-get purge --auto-remove -y \
     autoconf \
     automake \
