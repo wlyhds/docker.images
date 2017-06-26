@@ -19,6 +19,7 @@ RUN apt-get update \
     libtiff5-dev \
     libtool \
     zlib1g-dev \
+    wget \
   && wget http://www.leptonica.org/source/leptonica-1.74.4.tar.gz \
   && tar xvzf leptonica-1.74.4.tar.gz \
   && cd leptonica-1.74.4 \
