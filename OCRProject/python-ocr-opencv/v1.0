@@ -49,8 +49,11 @@ WORKDIR /tmp/opencv-$OPENCV_VERSION/build \
 	&& ldconfig  \
 	&& ln /dev/null /dev/raw1394   \ # hide warning - http://stackoverflow.com/questions/12689304/ctypes-error-libdc1394-error-failed-to-initialize-libdc1394 
   
-  	&& ln -s /dev/null /dev/raw1394
-
+  	&& ln -s /dev/null /dev/raw1394 \
+	
+	&& curl -o /usr/local/share/tessdata/chi_sim.traineddata \
+    		  https://raw.githubusercontent.com/tesseract-ocr/tessdata/master/chi_sim.traineddata \
+	
 	# cleanup package manager 
 	&& apt-get remove --purge -y curl build-essential checkinstall cmake  \
 	&& apt-get autoclean && apt-get clean  \
