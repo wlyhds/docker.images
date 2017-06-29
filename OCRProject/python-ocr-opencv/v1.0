@@ -29,7 +29,10 @@ RUN apt-get update  \
                         x264  \
                         v4l-utils  \
                         pkg-config \ 
-	                      curl build-essential checkinstall cmake \
+	                curl \ 
+			build-essential  \ 
+			checkinstall  \ 
+			cmake \
 	# download opencv
 	&& curl -sL https://github.com/Itseez/opencv/archive/$OPENCV_VERSION.tar.gz | tar xvz -C /tmp \
 	&& mkdir -p /tmp/opencv-$OPENCV_VERSION/build \
@@ -46,7 +49,7 @@ WORKDIR /tmp/opencv-$OPENCV_VERSION/build \
 	&& ldconfig  \
 	&& ln /dev/null /dev/raw1394   \ # hide warning - http://stackoverflow.com/questions/12689304/ctypes-error-libdc1394-error-failed-to-initialize-libdc1394 
   
-  && ln -s /dev/null /dev/raw1394
+  	&& ln -s /dev/null /dev/raw1394
 
 	# cleanup package manager 
 	&& apt-get remove --purge -y curl build-essential checkinstall cmake  \
