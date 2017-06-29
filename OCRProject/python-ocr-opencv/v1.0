@@ -86,9 +86,8 @@ RUN apt-get update \
     curl \
     git \
     libtool \
-  && apt-get clean \
   && rm -rf /tmp/tesseract /var/lib/apt/lists/*  \
-  && apt-get remove --purge -y curl build-essential checkinstall cmake  \
+  && apt-get remove --purge -y  checkinstall cmake  \
   && apt-get autoclean && apt-get clean  \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*   \
   
