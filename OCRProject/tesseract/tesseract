@@ -31,6 +31,8 @@ RUN apt-get update \
   && cd / \
   && curl -o /usr/local/share/tessdata/eng.traineddata \
     https://raw.githubusercontent.com/tesseract-ocr/tessdata/master/eng.traineddata \
+  && curl -o /usr/local/share/tessdata/chi_sim.traineddata \
+    https://raw.githubusercontent.com/tesseract-ocr/tessdata/master/chi_sim.traineddata \
   && apt-get purge --auto-remove -y \
     autoconf \
     automake \
