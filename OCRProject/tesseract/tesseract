@@ -2,7 +2,7 @@
 #2017.06
 
 FROM debian:jessie
-MAINTAINER 695243946@qq.com
+
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     autoconf \
@@ -19,16 +19,7 @@ RUN apt-get update \
     libtiff5-dev \
     libtool \
     zlib1g-dev \
-    wget \
-  && wget http://www.leptonica.org/source/leptonica-1.74.4.tar.gz \
-  && tar xvzf leptonica-1.74.4.tar.gz \
-  && cd leptonica-1.74.4 \
-  && ./configure \
-  && make \
-  && make install \
-  && cd .. \ 
-  && rm -f leptonica-1.74.4.tar.gz \
-  && git clone --branch 3.05.01 --depth 1 https://github.com/tesseract-ocr/tesseract.git /tmp/tesseract \
+  && git clone --branch 3.04.01 --depth 1 https://github.com/tesseract-ocr/tesseract.git /tmp/tesseract \
   && cd /tmp/tesseract \
   && ./autogen.sh \
   && ./configure \
