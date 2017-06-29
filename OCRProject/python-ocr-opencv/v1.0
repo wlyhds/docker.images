@@ -49,6 +49,8 @@ RUN apt-get update \
     pkg-config \ 
     checkinstall  \ 
     cmake \
+    
+  # install tesseract
   && git clone --branch 3.04.01 --depth 1 https://github.com/tesseract-ocr/tesseract.git /tmp/tesseract \
   && cd /tmp/tesseract \
   && ./autogen.sh \
@@ -64,12 +66,13 @@ RUN apt-get update \
   && curl -o /usr/local/share/tessdata/eng.traineddata \
     https://raw.githubusercontent.com/tesseract-ocr/tessdata/master/eng.traineddata \
 	
-
+  # install opencv and opencv_contrib
   && curl -sL https://github.com/Itseez/opencv/archive/$OPENCV_VERSION.tar.gz | tar xvz -C /tmp \
+  && curl -sL https://github.com/Itseez/opencv_contrib/archive/$OPENCV_VERSION.tar.gz | tar xvz -C /tmp/opencv-$OPENCV_VERSION \
   && mkdir -p /tmp/opencv-$OPENCV_VERSION/build \
   && cd /tmp/opencv-$OPENCV_VERSION/build \
 
-  &&  cmake -DWITH_FFMPEG=OFF -DWITH_OPENEXR=OFF -DBUILD_TIFF=OFF -DWITH_CUDA=OFF -DWITH_NVCUVID=OFF -DBUILD_PNG=OFF .. \
+  && cmake -DWITH_FFMPEG=OFF -DWITH_OPENEXR=OFF -DBUILD_TIFF=OFF -DWITH_CUDA=OFF -DWITH_NVCUVID=OFF -DBUILD_PNG=OFF .. \
   && make \
   && make install \
 
