@@ -87,7 +87,10 @@ RUN apt-get update \
   && echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf \
   && ldconfig  \
   # hide warning - http://stackoverflow.com/questions/12689304/ctypes-error-libdc1394-error-failed-to-initialize-libdc1394 
-  && ln -s /dev/null /dev/raw1394 \
+ && ln -s /dev/null /dev/raw1394 \
+
+ && curl -sL http://effbot.org/downloads/Imaging-1.1.7.tar.gz | tar xvz -C /tmp \
+ && pyhthon /tmp/Imaging-1.1.7/setup.py install \
 
   && apt-get purge --auto-remove -y \
     autoconf \
