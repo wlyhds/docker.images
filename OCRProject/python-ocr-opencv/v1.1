@@ -1,0 +1,105 @@
+#copy docker.io/braisgabin/tesseract
+#2017.06.29
+
+FROM debian:jessie
+MAINTAINER 695243946@qq.com
+
+ARG OPENCV_VERSION="3.2.0"
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    autoconf \
+    automake \
+    build-essential \
+    ca-certificates \
+    curl \
+    git \
+    libcairo2-dev \
+    libicu-dev \
+    libleptonica-dev \
+    libpango1.0-dev \
+    libpng12-dev \
+    libtiff5-dev \
+    libtool \
+    zlib1g-dev \
+    
+    libopencv-dev  \
+    yasm  \
+    libjpeg-dev  \
+    libjasper-dev  \
+    libavcodec-dev  \
+    libavformat-dev  \
+    libswscale-dev  \	
+    libdc1394-22-dev  \	
+    libv4l-dev  \
+    python-dev  \
+    python-numpy  \
+    python-matplotlib  \
+    libtbb-dev  \
+    libqt4-dev  \
+    libgtk2.0-dev  \
+    libmp3lame-dev  \
+    libopencore-amrnb-dev  \
+    libopencore-amrwb-dev  \
+    libtheora-dev  \
+    libvorbis-dev  \
+    libxvidcore-dev  \
+    x264  \
+    v4l-utils  \
+    pkg-config \ 
+    checkinstall  \ 
+    cmake \
+    python-tk \
+    
+  # install tesseract
+  && git clone --branch 3.04.01 --depth 1 https://github.com/tesseract-ocr/tesseract.git /tmp/tesseract \
+  && cd /tmp/tesseract \
+  && ./autogen.sh \
+  && ./configure \
+  && make \
+  && make install \
+  && make training \
+  && make training-install \
+  && ldconfig \
+  && cd / \
+  && curl -o /usr/local/share/tessdata/chi_sim.traineddata \
+    https://raw.githubusercontent.com/tesseract-ocr/tessdata/master/chi_sim.traineddata \
+  && curl -o /usr/local/share/tessdata/eng.traineddata \
+    https://raw.githubusercontent.com/tesseract-ocr/tessdata/master/eng.traineddata \
+	
+  # install opencv and opencv_contrib
+  && curl -sL https://github.com/Itseez/opencv/archive/$OPENCV_VERSION.tar.gz | tar xvz -C /tmp \
+  && curl -sL https://github.com/Itseez/opencv_contrib/archive/$OPENCV_VERSION.tar.gz | tar xvz -C /tmp \
+  && mkdir -p /tmp/opencv-$OPENCV_VERSION/build \
+  && cd /tmp/opencv-$OPENCV_VERSION/build \
+
+  && cmake -DWITH_FFMPEG=OFF \
+     -DWITH_OPENEXR=OFF \
+     -DBUILD_TIFF=OFF \
+     -DWITH_CUDA=OFF \
+     -DWITH_NVCUVID=OFF \
+     -DBUILD_PNG=OFF \
+     -DWITH_1394=OFF \
+     -DOPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib-$OPENCV_VERSION/modules /tmp/opencv-$OPENCV_VERSION \
+     .. \
+  && make -j5 \
+  && make install \
+
+  && echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf \
+  && ldconfig  \
+  
+ && curl -sL http://effbot.org/downloads/Imaging-1.1.7.tar.gz | tar xvz -C /tmp \
+ && python /tmp/Imaging-1.1.7/setup.py install \
+
+  && apt-get purge --auto-remove -y \
+    autoconf \
+    automake \
+    build-essential \
+    ca-certificates \
+    curl \
+    git \
+    libtool \
+  && rm -rf /tmp/tesseract /var/lib/apt/lists/*  \
+  && apt-get remove --purge -y  checkinstall cmake  \
+  && apt-get autoclean && apt-get clean  \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*   
