@@ -90,7 +90,7 @@ RUN apt-get update \
  && ln -s /dev/null /dev/raw1394 \
 
  && curl -sL http://effbot.org/downloads/Imaging-1.1.7.tar.gz | tar xvz -C /tmp \
- && pyhthon /tmp/Imaging-1.1.7/setup.py install \
+ && python /tmp/Imaging-1.1.7/setup.py install \
 
   && apt-get purge --auto-remove -y \
     autoconf \
