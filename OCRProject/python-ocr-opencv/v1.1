@@ -51,6 +51,9 @@ RUN apt-get update \
     cmake \
     python-tk \
     
+  && mkdir -p /usr/lib/python2.7/dist-packages/pytesser  \
+  && curl -o /usr/lib/python2.7/dist-packages/pytesser/pytesser.py  https://raw.githubusercontent.com/wlyhds/docker.images/master/OCRProject/tesseract/pytesser/pytesser.py \
+  && curl -o /usr/lib/python2.7/dist-packages/pytesser/__init__.py  https://raw.githubusercontent.com/wlyhds/docker.images/master/OCRProject/tesseract/pytesser/__init__.py \
   # install tesseract
   && git clone --branch 3.04.01 --depth 1 https://github.com/tesseract-ocr/tesseract.git /tmp/tesseract \
   && cd /tmp/tesseract \
