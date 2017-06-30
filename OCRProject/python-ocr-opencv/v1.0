@@ -49,6 +49,7 @@ RUN apt-get update \
     pkg-config \ 
     checkinstall  \ 
     cmake \
+    python-tk \
     
   # install tesseract
   && git clone --branch 3.04.01 --depth 1 https://github.com/tesseract-ocr/tesseract.git /tmp/tesseract \
