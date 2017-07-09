@@ -1,11 +1,11 @@
 FROM centos
  RUN yum -y update  \
  && yum install -y gcc gcc-c++ gtk+-devel libjpeg-devel libtiff-devel jasper-devel libpng-devel zlib-devel cmake \
- && yum install -y gtk2-devel pkgconfig numpy python python-pip python-devel gstreamer-plugins-base-devel libv4l ffmpeg-devel  \
- && yum install -y  mplayer mencoder flvtool2 \
- && yum install -y libdc1394 \
- && yum install -y gtk* \
- && yum install -y wget \
+ gtk2-devel pkgconfig numpy python python-pip python-devel gstreamer-plugins-base-devel libv4l ffmpeg-devel  \
+  mplayer mencoder flvtool2 \
+ libdc1394 \
+ gtk* \
+ wget \
  
  && mkdir -p /root/opencv \
  && cd /root/opencv \
@@ -20,6 +20,6 @@ FROM centos
  && mkdir -p build \
  && cd build \
  &&  cmake -DOPENCV_EXTRA_MODULES_PATH=/root/opencv/opencv_contrib-3.2.0/modules /root/opencv/opencv-3.2.0 \
- &&  make -j5
- && make install \
+ &&  make -j5 \
+ && make install 
  
