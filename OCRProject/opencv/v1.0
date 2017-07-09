@@ -19,7 +19,7 @@ FROM centos
  && cd opencv-3.2.0 \
  && mkdir -p build \
  && cd build \
- &&  cmake  -DCMAKE_BUILD_TYPE=Release  -DOPENCV_EXTRA_MODULES_PATH=/root/opencv/opencv_contrib-3.2.0/modules /root/opencv/opencv-3.2.0 \
- &&  make -j5 \
- && make install 
+ &&  cmake  -DCMAKE_BUILD_TYPE=Release  \ #-DOPENCV_EXTRA_MODULES_PATH=/root/opencv/opencv_contrib-3.2.0/modules /root/opencv/opencv-3.2.0 \
+# &&  make -j5 \
+ && make && make install 
  
