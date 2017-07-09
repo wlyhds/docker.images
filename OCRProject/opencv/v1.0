@@ -1,0 +1,25 @@
+FROM centos
+ RUN yum -y update  \
+ && yum install -y gcc gcc-c++ gtk+-devel libjpeg-devel libtiff-devel jasper-devel libpng-devel zlib-devel cmake \
+ && yum install -y gtk2-devel pkgconfig numpy python python-pip python-devel gstreamer-plugins-base-devel libv4l ffmpeg-devel  \
+ && yum install -y  mplayer mencoder flvtool2 \
+ && yum install -y libdc1394 \
+ && yum install -y gtk* \
+ && yum install -y wget \
+ 
+ && mkdir -p /root/opencv \
+ && cd /root/opencv \
+ && wget https://github.com/opencv/opencv_contrib/archive/3.2.0.tar.gz \
+     -O opencv_contrib-3.2.0.tar.gz \
+ && wget https://codeload.github.com/opencv/opencv/tar.gz/3.2.0  -O opencv-3.2.0.tar.gz \
+ 
+ && tar -xf  opencv_contrib-3.2.0.tar.gz \
+ && tar -xf  opencv-3.2.0.tar.gz \
+ 
+ && cd opencv-3.2.0 \
+ && mkdir -p build \
+ && cd build \
+ &&  cmake -DOPENCV_EXTRA_MODULES_PATH=/root/opencv/opencv_contrib-3.2.0/modules /root/opencv/opencv-3.2.0 \
+ &&  make -j5
+ && make install \
+ 
