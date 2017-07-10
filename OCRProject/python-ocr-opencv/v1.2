@@ -1,1 +1,15 @@
+FROM registry.cn-hangzhou.aliyuncs.com/wlyhds/centos:v7.0
+
+RUN yum -y update \
+&& yum -y install gcc \
+                  automake \
+                  autoconf \
+                  libtool \
+                  make  \
+                  wget \
+&& wget https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz   \
+
+
+
+&&    yum install -y python-devel 
 
