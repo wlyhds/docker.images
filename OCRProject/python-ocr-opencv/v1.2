@@ -12,7 +12,7 @@ RUN yum -y update \
 && cd /tmp/   \
 && wget https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz  -O Python-3.6.0.tgz \
 #安装Python3.6.0
-&& xzvf Python-3.6.0.tgz \
+&& tar -xzvf Python-3.6.0.tgz \
 && Python-3.6.0 \
 && ./configure  \
 && make && make install  \
@@ -42,7 +42,7 @@ RUN yum -y update \
 
 && cd /tmp/   \
 && wget http://www.leptonica.com/source/leptonica-1.74.4.tar.gz -O leptonica-1.74.4.tar.gz \
-&& tar xvf leptonica-1.74.4.tar.gz \
+&& tar -xvf leptonica-1.74.4.tar.gz \
 && cd leptonica-1.74.4 \
 && ./configure \
 && make && make install \
