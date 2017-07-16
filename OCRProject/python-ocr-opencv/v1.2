@@ -7,9 +7,84 @@ RUN yum -y update \
                   libtool \
                   make  \
                   wget \
-&& wget https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz   \
+#1.安装Python
+#下载Python3.6.0
+&& cd /tmp/   \
+&& wget https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz  -O Python-3.6.0.tgz \
+#安装Python3.6.0
+&& xzvf Python-3.6.0.tgz \
+&& Python-3.6.0 \
+&& ./configure  \
+&& make && make install  \
+#修改软连接
+&& rm -rf /usr/bin/python \
+&& ln -s /usr/local/bin/python3 /usr/bin/python \
+#修改指定文件使用系统自带的2.7
+&& sed -i  "1c #!/usr/bin/python2.7"   /usr/bin/yum  \
+&& sed -i  "1c #!/usr/bin/python2.7"   /usr/libexec/urlgrabber-ext-down  \
+#增加pip软连接
+&& rm -rf /usr/bin/pip  \
+&& ln -s /usr/local/bin/pip3 /usr/bin/pip  \
 
+&&  yum install -y python-devel \
 
+#安装Python相关库
+&& pip install numpy \
+&& pip install scipy matplotlib \
+&& pip install matplotlib \
+&& pip install django \
+&& pip install Pillow \
 
-&&    yum install -y python-devel 
+#2.安装tesseract-ocr
+#安装依赖包
+&& yum install -y autoconf automake libtool  \
+&& yum install -y libjpeg-devel libpng-devel libtiff-devel zlib-devel  \
 
+&& cd /tmp/   \
+&& wget http://www.leptonica.com/source/leptonica-1.74.4.tar.gz -O leptonica-1.74.4.tar.gz \
+&& tar xvf leptonica-1.74.4.tar.gz \
+&& cd leptonica-1.74.4 \
+&& ./configure \
+&& make && make install \
+#安装 tesseract-4.00.00dev
+&& cd /tmp/   \
+&& wget https://codeload.github.com/tesseract-ocr/tesseract/tar.gz/4.00.00dev -O tesseract-4.00.00dev.tar.gz \
+&& tar -xvf tesseract-4.00.00dev.tar.gz \
+&& cd tesseract-4.00.00dev \
+&& ./autogen.sh \
+&& ./configure \
+&& make && make install \
+&& cd /usr/local/share/tessdata/ \
+&& wget https://raw.githubusercontent.com/tesseract-ocr/tessdata/4.00/eng.traineddata -O eng.traineddata \
+&& wget https://raw.githubusercontent.com/tesseract-ocr/tessdata/4.00/chi_sim.traineddata -O chi_sim.traineddata \
+
+#3.安装opencv
+#安装依赖包
+&& yum install -y gcc gcc-c++ gtk+-devel libjpeg-devel libtiff-devel jasper-devel libpng-devel zlib-devel cmake \
+                  gtk2-devel pkgconfig numpy python python-pip python-devel gstreamer-plugins-base-devel libv4l ffmpeg-devel \
+                  mplayer mencoder flvtool2 \
+                  libdc1394 \
+                  gtk* \
+#修改编译报错
+&& sed -i  "85a #endif"  /usr/include/jasper/jas_math.h  \
+&& sed -i  "85a #define SIZE_MAX (4294967295U)" /usr/include/jasper/jas_math.h  \
+&& sed -i  "85a #if ! defined SIZE_MAX" /usr/include/jasper/jas_math.h  \
+#安装opencv3.2.0
+&& cd /tmp/  \
+&& wget https://github.com/opencv/opencv_contrib/archive/3.2.0.tar.gz  -O opencv_contrib-3.2.0.tar.gz \
+&& wget https://github.com/Itseez/opencv/archive/3.2.0.tar.gz -O opencv-3.2.0.tar.gz \
+&& tar -xvf opencv_contrib-3.2.0.tar.gz \
+&& tar -xvf opencv-3.2.0.tar.gz \
+&& mkdir -p /tmp/opencv-3.2.0/build \
+&& cd /tmp/opencv-3.2.0/build  \
+&& cmake  -DCMAKE_BUILD_TYPE=Release -DOPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib-3.2.0/modules /tmp/opencv-3.2.0 \
+&& make -j5 \
+&& make install \
+
+#4.安装httpd
+&& yum install -y  httpd \
+
+#卸载软件及清除垃圾文件
+&& yum remove -y make cmake wget \
+&& yum clean \
+&& rm -rf /tmp/*
