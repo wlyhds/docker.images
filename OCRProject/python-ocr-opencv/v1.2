@@ -12,8 +12,8 @@ RUN yum -y update \
 && cd /tmp/   \
 && wget https://www.python.org/ftp/python/3.6.0/Python-3.6.0.tgz  -O Python-3.6.0.tgz \
 #安装Python3.6.0
-&& tar -xzvf Python-3.6.0.tgz \
-&& Python-3.6.0 \
+&& tar -xzf Python-3.6.0.tgz \
+&& cd Python-3.6.0 \
 && ./configure  \
 && make && make install  \
 #修改软连接
@@ -26,7 +26,7 @@ RUN yum -y update \
 && rm -rf /usr/bin/pip  \
 && ln -s /usr/local/bin/pip3 /usr/bin/pip  \
 
-&&  yum install -y python-devel \
+&& yum install -y python-devel \
 
 #安装Python相关库
 && pip install numpy \
@@ -42,7 +42,7 @@ RUN yum -y update \
 
 && cd /tmp/   \
 && wget http://www.leptonica.com/source/leptonica-1.74.4.tar.gz -O leptonica-1.74.4.tar.gz \
-&& tar -xvf leptonica-1.74.4.tar.gz \
+&& tar -xf leptonica-1.74.4.tar.gz \
 && cd leptonica-1.74.4 \
 && ./configure \
 && make && make install \
@@ -73,8 +73,8 @@ RUN yum -y update \
 && cd /tmp/  \
 && wget https://github.com/opencv/opencv_contrib/archive/3.2.0.tar.gz  -O opencv_contrib-3.2.0.tar.gz \
 && wget https://github.com/Itseez/opencv/archive/3.2.0.tar.gz -O opencv-3.2.0.tar.gz \
-&& tar -xvf opencv_contrib-3.2.0.tar.gz \
-&& tar -xvf opencv-3.2.0.tar.gz \
+&& tar -xf opencv_contrib-3.2.0.tar.gz \
+&& tar -xf opencv-3.2.0.tar.gz \
 && mkdir -p /tmp/opencv-3.2.0/build \
 && cd /tmp/opencv-3.2.0/build  \
 && cmake  -DCMAKE_BUILD_TYPE=Release -DOPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib-3.2.0/modules /tmp/opencv-3.2.0 \
