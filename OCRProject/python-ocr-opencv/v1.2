@@ -89,5 +89,5 @@ RUN yum -y update \
 
 #卸载软件及清除垃圾文件
 && yum remove -y make cmake wget \
-&& yum clean \
+&& yum clean all \
 && rm -rf /tmp/*
