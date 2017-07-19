@@ -83,6 +83,7 @@ RUN yum -y update \
 && cmake  -DCMAKE_BUILD_TYPE=Release -DOPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib-3.2.0/modules /tmp/opencv-3.2.0 \
 && make -j5 \
 && make install \
+&&  pip install opencv-python \
 
 #4.安装httpd
 && yum install -y  httpd \
