@@ -35,15 +35,16 @@ RUN yum -y update \
 #增加pip软连接
 && rm -rf /usr/bin/pip  \
 && ln -s /usr/local/bin/pip3 /usr/bin/pip  \
+
 #1.1安装apr-1.6.2.tar.gz
 && cd /tmp/   \
 && wget http://mirrors.hust.edu.cn/apache//apr/apr-1.6.2.tar.gz  -O apr-1.6.2.tar.gz \
 && tar -zxf apr-1.6.2.tar.gz && cd apr-1.6.2 \
 && ./configure && make && make install \
-#1.2安装apr-1.6.2.tar.gz
+#1.2安装apr-util-1.6.0.tar.gz
 && wget http://mirrors.hust.edu.cn/apache//apr/apr-util-1.6.0.tar.gz -O apr-util-1.6.0.tar.gz \
 && tar -zxvf apr-util-1.6.0.tar.gz && cd apr-util-1.6.0 \
-&& ./configure && make && make install \
+&& ./configure --with-apr=/usr/local/apr/bin  && make && make install \
 && yum install -y python-devel \
 
 #1.3安装Python相关库
