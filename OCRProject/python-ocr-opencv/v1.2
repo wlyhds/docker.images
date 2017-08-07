@@ -20,7 +20,8 @@ RUN yum -y update \
 #安装Python3.6.0
 && tar -xzf Python-3.6.0.tgz \
 && cd Python-3.6.0 \
-&& ./configure  \
+#python共享模式
+&& ./configure  --enable-shared \
 && make && make install  \
 #修改软连接
 && rm -rf /usr/bin/python \
@@ -28,6 +29,8 @@ RUN yum -y update \
 #修改指定文件使用系统自带的2.7
 && sed -i  "1c #!/usr/bin/python2.7"   /usr/bin/yum  \
 && sed -i  "1c #!/usr/bin/python2.7"   /usr/libexec/urlgrabber-ext-down  \
+#解决python3.6m 报错
+&& sed -i "2c /usr/local/lib" /etc/ld.so.conf \
 #增加pip软连接
 && rm -rf /usr/bin/pip  \
 && ln -s /usr/local/bin/pip3 /usr/bin/pip  \
