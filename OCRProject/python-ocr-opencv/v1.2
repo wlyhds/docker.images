@@ -31,18 +31,33 @@ RUN yum -y update \
 && sed -i  "1c #!/usr/bin/python2.7"   /usr/libexec/urlgrabber-ext-down  \
 #解决python3.6m 报错
 && sed -i "2c /usr/local/lib" /etc/ld.so.conf \
+&& ldconfig  \
 #增加pip软连接
 && rm -rf /usr/bin/pip  \
 && ln -s /usr/local/bin/pip3 /usr/bin/pip  \
-
+#1.1安装apr-1.6.2.tar.gz
+&& cd /tmp/   \
+&& wget http://mirrors.hust.edu.cn/apache//apr/apr-1.6.2.tar.gz  -O apr-1.6.2.tar.gz \
+&& tar -zxf apr-1.6.2.tar.gz && cd apr-1.6.2 \
+&& ./configure && make && make install \
+#1.2安装apr-1.6.2.tar.gz
+&& wget http://mirrors.hust.edu.cn/apache//apr/apr-util-1.6.0.tar.gz -O apr-util-1.6.0.tar.gz \
+&& tar -zxvf apr-util-1.6.0.tar.gz && cd apr-util-1.6.0 \
+&& ./configure && make && make install \
 && yum install -y python-devel \
 
-#安装Python相关库
+#1.3安装Python相关库
 && pip install numpy \
 && pip install scipy matplotlib \
 && pip install matplotlib \
 && pip install django \
 && pip install Pillow \
+
+#1.4安装Apache
+&& cd /tmp/   \
+&& wget http://mirrors.hust.edu.cn/apache//httpd/httpd-2.4.26.tar.gz -O  httpd-2.4.26.tar.gz \
+&& tar -zxf httpd-2.4.26.tar.gz httpd-2.4.26 && cd httpd-2.4.26 \
+&& ./configure && make && make install \
 
 #2.安装tesseract-ocr
 #安装依赖包
@@ -93,8 +108,6 @@ RUN yum -y update \
 && pip install pytesseract \
 
 
-#4.安装httpd
-&& yum install -y  httpd \
 
 #卸载软件及清除垃圾文件
 && yum remove -y make cmake wget \
