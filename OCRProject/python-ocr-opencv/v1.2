@@ -39,7 +39,6 @@ RUN yum -y update \
 && pip install scipy matplotlib \
 && pip install matplotlib \
 && pip install django \
-&& pip install Pillow \
 
 #解决python3.6m 报错
 && sed -i "2c /usr/local/lib" /etc/ld.so.conf \
@@ -107,7 +106,7 @@ RUN yum -y update \
 && make install \
 && pip install opencv-python \
 && pip install pytesseract \
-
+&& pip install Pillow \
 
 
 #卸载软件及清除垃圾文件
