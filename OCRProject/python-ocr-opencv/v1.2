@@ -29,31 +29,31 @@ RUN yum -y update \
 #修改指定文件使用系统自带的2.7
 && sed -i  "1c #!/usr/bin/python2.7"   /usr/bin/yum  \
 && sed -i  "1c #!/usr/bin/python2.7"   /usr/libexec/urlgrabber-ext-down  \
-#解决python3.6m 报错
-&& sed -i "2c /usr/local/lib" /etc/ld.so.conf \
-&& ldconfig  \
+
 #增加pip软连接
 && rm -rf /usr/bin/pip  \
 && ln -s /usr/local/bin/pip3 /usr/bin/pip  \
 
-#1.1安装apr-1.6.2.tar.gz
-&& cd /tmp/   \
-&& wget http://mirrors.hust.edu.cn/apache//apr/apr-1.6.2.tar.gz  -O apr-1.6.2.tar.gz \
-&& tar -zxf apr-1.6.2.tar.gz && cd apr-1.6.2 \
-&& ./configure && make && make install \
-#1.2安装apr-util-1.6.0.tar.gz
-&& wget http://mirrors.hust.edu.cn/apache//apr/apr-util-1.6.0.tar.gz -O apr-util-1.6.0.tar.gz \
-&& tar -zxvf apr-util-1.6.0.tar.gz && cd apr-util-1.6.0 \
-&& ./configure --with-apr=/usr/local/apr/bin  && make && make install \
-&& yum install -y python-devel \
-
-#1.3安装Python相关库
+#1.1安装Python相关库
 && pip install numpy \
 && pip install scipy matplotlib \
 && pip install matplotlib \
 && pip install django \
 && pip install Pillow \
 
+#解决python3.6m 报错
+&& sed -i "2c /usr/local/lib" /etc/ld.so.conf \
+&& ldconfig  \
+#1.2安装apr-1.6.2.tar.gz
+&& cd /tmp/   \
+&& wget http://mirrors.hust.edu.cn/apache//apr/apr-1.6.2.tar.gz  -O apr-1.6.2.tar.gz \
+&& tar -zxf apr-1.6.2.tar.gz && cd apr-1.6.2 \
+&& ./configure && make && make install \
+#1.3安装apr-util-1.6.0.tar.gz
+&& wget http://mirrors.hust.edu.cn/apache//apr/apr-util-1.6.0.tar.gz -O apr-util-1.6.0.tar.gz \
+&& tar -zxvf apr-util-1.6.0.tar.gz && cd apr-util-1.6.0 \
+&& ./configure --with-apr=/usr/local/apr/bin   && make && make install \
+&& yum install -y python-devel \
 #1.4安装Apache
 && cd /tmp/   \
 && wget http://mirrors.hust.edu.cn/apache//httpd/httpd-2.4.26.tar.gz -O  httpd-2.4.26.tar.gz \
