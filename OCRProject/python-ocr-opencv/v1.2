@@ -10,6 +10,9 @@ RUN yum -y update \
                   zlib* \
                   openssl-devel \
                   bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel gcc-c++ \
+                  kde-l10n-Chinese \
+&& yum -y reinstall glibc-common \
+&& localedef -c -f UTF-8 -i zh_CN zh_CN.utf8 \
 #1.安装Python
 #下载Python3.6.0
 && cd /tmp/   \
@@ -83,7 +86,9 @@ RUN yum -y update \
 && cmake  -DCMAKE_BUILD_TYPE=Release -DOPENCV_EXTRA_MODULES_PATH=/tmp/opencv_contrib-3.2.0/modules /tmp/opencv-3.2.0 \
 && make -j5 \
 && make install \
-&&  pip install opencv-python \
+&& pip install opencv-python \
+&& pip install pytesseract \
+&& pip install mod_wsgi \
 
 #4.安装httpd
 && yum install -y  httpd \
@@ -92,3 +97,5 @@ RUN yum -y update \
 && yum remove -y make cmake wget \
 && yum clean all \
 && rm -rf /tmp/*
+
+ENV LC_ALL zh_CN.utf8
