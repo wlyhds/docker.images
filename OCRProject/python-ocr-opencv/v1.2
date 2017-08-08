@@ -56,8 +56,8 @@ RUN yum -y update \
 && yum install -y python-devel \
 #1.4安装Apache
 && cd /tmp/   \
-&& wget http://mirrors.hust.edu.cn/apache//httpd/httpd-2.4.26.tar.gz -O  httpd-2.4.26.tar.gz \
-&& tar -zxf httpd-2.4.26.tar.gz httpd-2.4.26 && cd httpd-2.4.26 \
+&& wget http://apache.fayea.com//httpd/httpd-2.4.27.tar.gz -O  httpd-2.4.27.tar.gz \
+&& tar -zxf httpd-2.4.27.tar.gz httpd-2.4.27 && cd httpd-2.4.27 \
 && ./configure && make && make install \
 
 #2.安装tesseract-ocr
