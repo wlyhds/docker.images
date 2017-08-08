@@ -29,7 +29,7 @@ RUN yum -y update \
 #修改指定文件使用系统自带的2.7
 && sed -i  "1c #!/usr/bin/python2.7"   /usr/bin/yum  \
 && sed -i  "1c #!/usr/bin/python2.7"   /usr/libexec/urlgrabber-ext-down  \
-&& cp /usr/local/lib/libpython3.6m.so.1.0 /usr/lib64/libpython3.6m.so.1.0
+&& cp /usr/local/lib/libpython3.6m.so.1.0 /usr/lib64/libpython3.6m.so.1.0 \
 
 #增加pip软连接
 && rm -rf /usr/bin/pip  \
