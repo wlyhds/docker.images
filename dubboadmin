@@ -1,0 +1,2 @@
+FROM apache/dubbo-admin:0.6.0
+MAINTAINER 695243946@qq.com
