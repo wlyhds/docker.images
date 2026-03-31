@@ -1,2 +1,2 @@
-FROM openclaw:20260302
+FROM 0penclaw/openclaw:20260302
 MAINTAINER 695243946@qq.com
