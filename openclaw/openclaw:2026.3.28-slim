@@ -1,2 +1,0 @@
-FROM ghcr.io/openclaw/openclaw:2026.3.28-slim
-MAINTAINER 695243946@qq.com
