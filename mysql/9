@@ -1,2 +1,2 @@
-FROM mysql:8
+FROM mysql:9
 MAINTAINER 695243946@qq.com
